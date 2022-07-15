@@ -14,7 +14,7 @@ def Getcolor (img ,height ,width):
     R = 0;
     G = 0;
     B = 0;
-    count = 0;
+    count = 1;
     color = [];
     for i in range(0, len(height), 1):
         count += 1;
@@ -30,18 +30,17 @@ def Getcolor (img ,height ,width):
     return color;
 
 def Getarea(img):
-    count = 0;
-    height = [];
-    width = [];
-    height, width = img.shape;
+    count = 0
+    point_height = []
+    point_width = []
+    height, width = img.shape
     for h in range(0, height, 1):
         for w in range(0, width, 1):
             if (img[h, w] == 0):
-                count += 1;
-                height.append(h);
-                width.append(w);
-    count = height*width - count;
-    return count, width, height;
+                count += 1
+                point_height.append(h)
+                point_width.append(w)
+    return count, point_width, point_height
 
 def Getcircum(img):
     count = 0

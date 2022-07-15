@@ -4,7 +4,7 @@ import cv2 as cv
 import numpy as np
 from PIL import Image
 
-imgfile='D:\\Pycharmfile\\lingguofenjian\\imgfile\\2.png'
+imgfile='D:\\Pycharmfile\\lingguofenjian\\imgfile\\7.png'
 imgf=open("..imgf",'w+')
 
 def edge(img):
@@ -17,7 +17,7 @@ def edge(img):
     ygrad = cv.Sobel(blurred, cv.CV_16SC1, 0, 1)
     # 计算边缘
     # 50和150参数必须符合1：3或者1：2
-    edge_output = cv.Canny(xgrad, ygrad, 50, 150)
+    edge_output = cv.Canny(xgrad, ygrad, 100, 300)
 
     contours, heriachy = cv.findContours(edge_output, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     # max = 0
@@ -49,7 +49,7 @@ def edge(img):
     cut_blurred = Applecut(blurred, x, y, w, h)
     cv.imshow('cut', cut_blurred)
 
-    ret, binary = cv.threshold(cut_blurred, 70, 255, cv.THRESH_BINARY)
+    ret, binary = cv.threshold(cut_blurred, 150, 255, cv.THRESH_BINARY)
     cv.imshow("bi", binary)  # 求面积
 
     edge = cv.Canny(binary, 40, 100)
