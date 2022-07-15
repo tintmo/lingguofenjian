@@ -1,10 +1,22 @@
+import os
 from math import *
+
+import cv2
+
 from doimg import *
 import cv2 as cv
 import numpy as np
 from PIL import Image
 
-imgfile='D:\\Pycharmfile\\lingguofenjian\\imgfile\\7.png'
+framepath = "frame\\frame.png"
+imgfile='imgfile\\7.png'
+imglist=[
+    'imgfile\\1.png'
+    'imgfile\\2.png'
+    'imgfile\\3.png'
+    'imgfile\\4.png'
+    'imgfile\\5.png'
+]
 imgf=open("..imgf",'w+')
 
 def edge(img):
@@ -17,7 +29,7 @@ def edge(img):
     ygrad = cv.Sobel(blurred, cv.CV_16SC1, 0, 1)
     # 计算边缘
     # 50和150参数必须符合1：3或者1：2
-    edge_output = cv.Canny(xgrad, ygrad, 100, 300)
+    edge_output = cv.Canny(xgrad, ygrad, 50, 150)
 
     contours, heriachy = cv.findContours(edge_output, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     # max = 0
@@ -71,21 +83,24 @@ def edge(img):
 
 
 def do():
-    for i in range(1, 8, 1):
+    for i in range(1, 20, 1):
         print(i, ':')
         #         path = file + str(i) + '.jpg'
 
         #         src1 = cv.imread(path)
-        src1 = cv.imread(imgfile)
-        img=Image.open(imgfile)
+
+        get_photo(framepath)
+        src1 = cv.imread(framepath)
+        img=Image.open(framepath)
         # 图三（原图）
         size = src1.shape
         src = cv.resize(src1, ((int)(size[1] / 5), (int)(size[0] / 5)), cv.INTER_LINEAR)
         edge(src)
         cv.waitKey(0)
     #     cv.destroyAllWindows()
-    imgf.closed()
+    #     del_files(framepath)
 
+    imgf.closed()
 
 do()
 
