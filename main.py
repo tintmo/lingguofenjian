@@ -19,6 +19,13 @@ imglist=[
 ]
 imgf=open("..imgf",'w+')
 
+
+weights = np.array([0, 1]) # w1 = 0, w2 = 1
+bias = 4
+
+
+
+
 def edge(img):
     # 灰度图像
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
