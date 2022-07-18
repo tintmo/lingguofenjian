@@ -107,6 +107,8 @@ def do():
     #     cv.destroyAllWindows()
     #     del_files(framepath)
 
+
+
     imgf.closed()
 
 do()

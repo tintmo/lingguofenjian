@@ -68,7 +68,7 @@ def del_files(dir_path):
             del_files(tf)
 # 调用摄像头拍摄照片
 def get_photo(framepath):
-    cap = cv2.VideoCapture(1)           # 开启摄像头
+    cap = cv2.VideoCapture(0)           # 开启摄像头，0为本机，1或2为外设
     f, frame = cap.read()               # 将摄像头中的一帧图片数据保存
     cv2.imwrite(framepath, frame)     # 将图片保存为本地文件
     cap.release()                       # 关闭摄像头
