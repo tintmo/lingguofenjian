@@ -7,9 +7,11 @@ from doimg import *
 import cv2 as cv
 import numpy as np
 from PIL import Image
+import pandas as pd
+import xlwt
+import openpyxl
 
 framepath = "frame\\frame.png"
-imgfile='imgfile\\7.png'
 imglist=[
     'imgfile\\1.png'
     'imgfile\\2.png'
@@ -17,7 +19,11 @@ imglist=[
     'imgfile\\4.png'
     'imgfile\\5.png'
 ]
-imgf=open("..imgf",'w+')
+appledatapath = pd.ExcelWriter("imgfile\\appledata.xlsx")
+# imgf=open("..imgf",'w+')
+if not os.path.exists('imgfile\\appledata.xlsx'):
+    appledata = pd.DataFrame()
+    appledata1 = appledata.to_excel("imgfile\\appledata.xlsx",'1')
 
 
 weights = np.array([0, 1]) # w1 = 0, w2 = 1
@@ -85,11 +91,25 @@ def edge(img):
     area, point_width, point_height = Getarea(binary)
     circumference = Getcircum(edge)
     color = Getcolor(cut_img, point_height, point_width)
-
+    relist=[area,circumference,longth,width,color]
     print('area:', area, 'circumference:', circumference, 'longth:', longth, 'width:', width, 'color:', color)
+    return relist
 
 
 def do():
+    for j in range(1, 16, 1):
+        path = "imgfile\\" + str(j) + '.png'
+        src2 = cv.imread(path)
+        size = src2.shape
+        src3 = cv.resize(src2, ((int)(size[1] / 5), (int)(size[0] / 5)), cv.INTER_LINEAR)
+        datalist = edge(src3)
+        dataframe = pd.DataFrame({'index':[j],'面积':[datalist[0]],'颜色':[datalist[4]]})
+        print(dataframe)
+        dataframe.to_excel(appledatapath,'1')
+        appledatapath.save()
+    appledatapath.close()
+
+
     for i in range(1, 20, 1):
         print(i, ':')
         #         path = file + str(i) + '.jpg'
@@ -107,9 +127,7 @@ def do():
     #     cv.destroyAllWindows()
     #     del_files(framepath)
 
-
-
-    imgf.closed()
+    # imgf.closed()
 
 do()
 
